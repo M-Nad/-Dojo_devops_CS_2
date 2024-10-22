@@ -14,6 +14,12 @@ async function handler(_req: Request): Promise<Response> {
 
   console.log("Got request : ");
   console.log(_req.url);
+
+  // Extracting the last part of the URL
+  const urlParts = _req.url.split('/');
+  const lastPart = urlParts[urlParts.length - 1]; // This will give the last part of the URL
+  console.log("Last part of the URL:", lastPart);
+  
   if (_req.method == "OPTIONS") {
     handlePreFlightRequest();
   }
