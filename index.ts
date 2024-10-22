@@ -23,13 +23,11 @@ async function handler(_req: Request): Promise<Response> {
   const urlParts = _req.url.split('/');
   const lastPart = urlParts[urlParts.length - 1]; // This will give the last part of the URL
   console.log("Last part of the URL:", lastPart);
+  
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
 
   if (lastPart !== "") {
-    console.log("Last part of the URL:", lastPart);
-    
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
-  
     const similarityRequestBody = JSON.stringify({
       word1: "poirier",
       word2: "pommier",
