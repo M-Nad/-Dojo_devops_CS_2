@@ -27,11 +27,13 @@ async function handler(_req: Request): Promise<Response> {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
 
-  let word : string = "undifined";
+  let word = "undifined";
   
   if (lastPart !== "") {
     word = lastPart;
   }
+
+  console.log("Word submission :", word);
   
   const similarityRequestBody = JSON.stringify({
     word1: word,
