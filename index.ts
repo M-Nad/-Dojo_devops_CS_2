@@ -11,6 +11,9 @@ function handlePreFlightRequest(): Response {
 }
 
 async function handler(_req: Request): Promise<Response> {
+
+  console.log(Request);
+  
   if (_req.method == "OPTIONS") {
     handlePreFlightRequest();
   }
