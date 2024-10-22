@@ -24,27 +24,44 @@ async function handler(_req: Request): Promise<Response> {
   const lastPart = urlParts[urlParts.length - 1]; // This will give the last part of the URL
   console.log("Last part of the URL:", lastPart);
 
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
-
-  const similarityRequestBody = JSON.stringify({
-    word1: "poirier",
-    word2: "pommier",
-  });
-
-  const requestOptions = {
-    method: "POST",
-    headers: headers,
-    body: similarityRequestBody,
-    redirect: "follow",
-  };
-
-  try {
-    const response = await fetch("http://word2vec.nicolasfley.fr/similarity", requestOptions);
-
-    if (!response.ok) {
-      console.error(`Error: ${response.statusText}`);
-      return new Response(`Error: ${response.statusText}`, {
+  if (lastPart !== "") {
+    console.log("Last part of the URL:", lastPart);
+    
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+  
+    const similarityRequestBody = JSON.stringify({
+      word1: "poirier",
+      word2: "pommier",
+    });
+  
+    const requestOptions = {
+      method: "POST",
+      headers: headers,
+      body: similarityRequestBody,
+      redirect: "follow",
+    };
+  
+    try {
+      const response = await fetch("http://word2vec.nicolasfley.fr/similarity", requestOptions);
+  
+      if (!response.ok) {
+        console.error(`Error: ${response.statusText}`);
+        return new Response(`Error: ${response.statusText}`, {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "content-type",
+          },
+        });
+      }
+  
+      const result = await response.json();
+  
+      console.log(result);
+  
+      return new Response(JSON.stringify(result), {
         status: 200,
         headers: {
           "Content-Type": "application/json",
@@ -52,23 +69,10 @@ async function handler(_req: Request): Promise<Response> {
           "Access-Control-Allow-Headers": "content-type",
         },
       });
+    } catch (error) {
+      console.error("Fetch error:", error);
+      return new Response(`Error: ${error.message}`, { status: 500 });
     }
-
-    const result = await response.json();
-
-    console.log(result);
-
-    return new Response(JSON.stringify(result), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "content-type",
-      },
-    });
-  } catch (error) {
-    console.error("Fetch error:", error);
-    return new Response(`Error: ${error.message}`, { status: 500 });
   }
 }
 
