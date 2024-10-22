@@ -27,7 +27,7 @@ async function handler(_req: Request): Promise<Response> {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
 
-  word = "undifined"
+  let word : string = "undifined";
   
   if (lastPart !== "") {
     word = lastPart;
