@@ -11,7 +11,9 @@ function handlePreFlightRequest(): Response {
 }
 
 async function handler(_req: Request): Promise<Response> {
-  
+
+  console.log("Got request : ");
+  console.log(_req.url);
   if (_req.method == "OPTIONS") {
     handlePreFlightRequest();
   }
@@ -49,7 +51,6 @@ async function handler(_req: Request): Promise<Response> {
     const result = await response.json();
 
     console.log(result);
-    console.log(_req.url);
     return new Response(JSON.stringify(result), {
       status: 200,
       headers: {
