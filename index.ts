@@ -62,11 +62,11 @@ async function handler(_req: Request): Promise<Response> {
       });
     }
 
-    const result = await response.json();
+    const value = await response.json();
 
-    console.log(result);
+    console.log(value);
 
-    return new Response(JSON.stringify(result), {
+    return new Response(JSON.stringify(value), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
